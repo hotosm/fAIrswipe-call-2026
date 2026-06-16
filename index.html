@@ -6,7 +6,7 @@
 <title>Open Call: Map Your City with fAIr</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #111c31;
@@ -25,7 +25,7 @@
     color: var(--ink);
     font-family: "Archivo", -apple-system, Roboto, Helvetica, Arial, sans-serif;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.8;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -97,16 +97,16 @@
   }
 
   h1 {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 300;
+    font-family: "Archivo", sans-serif;
+    font-weight: 800;
     font-size: clamp(48px, 7vw, 96px);
     line-height: 0.92;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     color: var(--ink);
   }
   h1 em {
     font-style: italic;
-    font-weight: 300;
+    font-weight: 800;
     color: var(--red);
   }
 
@@ -192,10 +192,10 @@
     font-weight: 600;
   }
   .section-head h2 {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 300;
-    font-size: 36px;
-    letter-spacing: -0.01em;
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    letter-spacing: -0.02em;
   }
   .section-head .rule {
     flex: 1;
@@ -220,6 +220,30 @@
     font-family: "Archivo", sans-serif;
     font-size: 14px;
     font-weight: 500;
+  }
+
+  .faq {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 40px;
+  }
+  .faq-item {
+    border-top: 1px solid var(--red);
+    padding-top: 14px;
+  }
+  .faq-q {
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .faq-a {
+    font-size: 14px;
+    line-height: 1.65;
+    opacity: 0.85;
   }
 
   .workflow {
@@ -254,10 +278,10 @@
     background: var(--red);
   }
   .step h3 {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 1.15;
+    font-family: "Archivo", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.2;
     margin-bottom: 10px;
     letter-spacing: -0.01em;
   }
@@ -304,11 +328,11 @@
     font-weight: 600;
   }
   .oe-banner h3 {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 500;
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
     font-style: italic;
-    font-size: 28px;
-    letter-spacing: -0.01em;
+    font-size: 24px;
+    letter-spacing: -0.02em;
     line-height: 1;
     color: var(--ink);
   }
@@ -373,9 +397,9 @@
     font-weight: 600;
   }
   .deliv h4 {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 500;
-    font-size: 22px;
+    font-family: "Archivo", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
     margin-bottom: 8px;
     letter-spacing: -0.01em;
   }
@@ -396,11 +420,11 @@
     border-top: 4px solid var(--red);
   }
   .apply h2 {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 300;
+    font-family: "Archivo", sans-serif;
+    font-weight: 800;
     font-size: 44px;
     line-height: 1;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.03em;
   }
   .apply h2 em {
     font-style: italic;
@@ -475,6 +499,7 @@
     .step { border-right: none; border-bottom: 1px solid var(--line-soft); }
     .step:last-child { border-bottom: none; }
     .about-grid { grid-template-columns: 1fr; gap: 20px; }
+    .faq { grid-template-columns: 1fr; }
     .oe-grid { grid-template-columns: 1fr; }
     .oe-banner h3 { font-size: 22px; }
     .apply { grid-template-columns: 1fr; padding: 28px; }
@@ -528,8 +553,8 @@
       <span class="rule"></span>
     </div>
     <div class="about-grid">
-      <p>You know your city. You know what is missing on its map. We support you to fill the gaps using AI assisted mapping on drone imagery, with all results published as open data.</p>
-      <p>Selected projects receive between <span class="accent">$3,000 and $5,000</span> in funding, scaled to proposal scope, plus full technical support from HOT. The AI side is on us. You define the feature, run the mapathon, and validate the output.</p>
+      <p>You know what geographic data is missing to make better decisions. We support you to fill those gaps using AI-assisted mapping on drone imagery, with all results published as open data.</p>
+      <p>Selected projects receive between <span class="accent">$3,000 and $5,000</span> in funding depending on the proposal scope, plus full technical support from HOT. The AI side is on us. You define the feature, run the mapathon, and validate the output.</p>
     </div>
   </section>
 
@@ -553,8 +578,8 @@
       <div class="step">
         <div class="stepnum">Step 03</div>
         <h3>Run a Locate mapathon</h3>
-        <p>Set up a Locate project on MapSwipe and mobilise volunteers to label your feature. We help you scope and run the session.</p>
-        <span class="tool">MapSwipe / Locate</span>
+        <p>Set up a Locate Objects project on MapSwipe and mobilise volunteers to label your feature. We help you scope and run the session.</p>
+        <span class="tool">MapSwipe / Locate Objects</span>
       </div>
       <div class="step">
         <div class="stepnum">Step 04</div>
@@ -583,7 +608,7 @@
         <h3>What HOT offers.</h3>
       </div>
       <div class="oe-grid">
-        <div class="oe-item"><span><strong>$3,000 to $5,000 in project funding,</strong> scaled to proposal scope. Covers mapathon costs, validation effort, and team time.</span></div>
+        <div class="oe-item"><span><strong>$3,000 to $5,000 in project funding</strong> depending on the proposal scope. Covers mapathon costs, validation effort, and team time.</span></div>
         <div class="oe-item"><span><strong>AI support.</strong> We help you train the object detection model with fAIr on your data and share the inference outputs.</span></div>
         <div class="oe-item"><span><strong>Technical guidance</strong> on MapSwipe Locate setup, sample sizing, validation, and OSM contribution.</span></div>
         <div class="oe-item"><span><strong>Possible drone or expert support.</strong><span class="note">Subject to availability. We may be able to send a team member or connect you with mentors.</span></span></div>
@@ -620,6 +645,28 @@
         <div class="tag">Deliverable 02</div>
         <h4>Open mapping data</h4>
         <p>Validated features published as open data. OpenStreetMap is the preferred destination. Where conflation or other constraints make OSM contribution unfeasible (rooftops, for example), HDX or another open public platform is accepted.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="num">05</span>
+      <h2>FAQ</h2>
+      <span class="rule"></span>
+    </div>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">What is MapSwipe?</div>
+        <div class="faq-a">MapSwipe is a free mobile app that lets volunteers contribute to humanitarian mapping by swiping through satellite or drone imagery. You tap to mark where features appear, building a dataset that guides more detailed mapping work.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is a Locate Objects project?</div>
+        <div class="faq-a">Locate Objects is a project type within MapSwipe. Instead of simply flagging broad areas, it asks volunteers to point to the exact position of a specific feature in each image tile, producing precise coordinates suitable for training an AI model.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is fAIr?</div>
+        <div class="faq-a">fAIr is HOT's open-source AI-assisted mapping tool. It trains object detection models on community-labelled data and runs inference over drone imagery, producing feature predictions that mappers then validate and publish as open data.</div>
       </div>
     </div>
   </section>

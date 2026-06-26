@@ -493,6 +493,18 @@
     display: flex;
     gap: 18px;
     flex-wrap: wrap;
+    align-items: center;
+  }
+  footer .fair-logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  footer .tool-logo {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    display: block;
   }
 
   @media (max-width: 900px) {
@@ -690,7 +702,7 @@
       </div>
       <div class="row">
         <span class="key">Deadline</span>
-        <span class="val">[ Coming Soon ]</span>
+        <span class="val">30 September 2026</span>
       </div>
       <div class="row">
         <span class="key">Apply</span>
@@ -703,7 +715,10 @@
     <span>&copy; 2026 Humanitarian OpenStreetMap Team / Open Call</span>
     <div class="links">
       <a href="https://www.hotosm.org/en/" target="_blank" rel="noopener">HOT</a>
-      <a href="https://fair.hotosm.org/" target="_blank" rel="noopener">fAIr</a>
+      <a href="https://fair.hotosm.org/" target="_blank" rel="noopener" class="fair-logo-link">
+        <img src="https://raw.githubusercontent.com/hotosm/ui/main/src/components/tool-menu/assets/icon-fair.svg" alt="fAIr" class="tool-logo">
+        fAIr
+      </a>
       <a href="https://mapswipe.org/en/" target="_blank" rel="noopener">MapSwipe</a>
     </div>
   </footer>

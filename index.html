@@ -1,867 +1,1052 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Open Call: Map Your City with fAIr</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ink: #111c31;
-    --paper: #ffffff;
-    --paper-deep: #f3f3f3;
-    --line: #111c31;
-    --line-soft: rgba(17, 28, 49, 0.15);
-    --red: #d73f3f;
-    --red-deep: #a52a28;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Call: Map Your City with fAIr</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Barlow+Condensed:wght@500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #111c31;
+      --paper: #ffffff;
+      --paper-deep: #f3f3f3;
+      --line: #111c31;
+      --line-soft: rgba(17, 28, 49, 0.15);
+      --red: #d73f3f;
+      --red-deep: #a52a28;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  html, body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: "Archivo", -apple-system, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.8;
-    -webkit-font-smoothing: antialiased;
-  }
+    html,
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Archivo", -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  .page {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 48px 56px 64px;
-    position: relative;
-  }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 56px 64px;
+      position: relative;
+    }
 
-  .marker {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: "Archivo", sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink);
-    margin-bottom: 28px;
-  }
-  .marker .dot {
-    width: 8px; height: 8px;
-    background: var(--red);
-    border-radius: 50%;
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  .hot-logo {
-    display: inline-flex;
-    align-items: center;
-    height: 48px;
-    line-height: 0;
-    text-decoration: none;
-  }
-  .hot-logo img {
-    display: block;
-    height: 100%;
-    width: auto;
-  }
-  .marker .line {
-    flex: 1;
-    height: 1px;
-    background: var(--ink);
-    opacity: 0.3;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(1.4); }
-  }
+    .marker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Archivo", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
 
-  .hero {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 40px;
-    align-items: end;
-    border-bottom: 1px solid var(--red);
-    padding-bottom: 32px;
-    margin-bottom: 40px;
-    position: relative;
-  }
-  .hero::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 80px;
-    height: 4px;
-    background: var(--red);
-  }
+    .marker .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
 
-  h1 {
-    font-family: "Archivo", sans-serif;
-    font-weight: 800;
-    font-size: clamp(48px, 7vw, 96px);
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-    color: var(--ink);
-  }
-  h1 em {
-    font-style: italic;
-    font-weight: 800;
-    color: var(--red);
-  }
+    .hot-logo {
+      display: inline-flex;
+      align-items: center;
+      height: 48px;
+      line-height: 0;
+      text-decoration: none;
+    }
 
-  .hero-aside {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding-bottom: 8px;
-  }
-  .hero-aside p {
-    font-size: 17px;
-    line-height: 1.55;
-    max-width: 360px;
-  }
-  .hero-aside .pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 14px;
-    border: 1px solid var(--red);
-    border-radius: 100px;
-    font-family: "Archivo", sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    background: var(--paper);
-    width: fit-content;
-    color: var(--red-deep);
-  }
-  .pill .badge {
-    background: var(--red);
-    color: var(--paper);
-    padding: 2px 10px;
-    border-radius: 100px;
-    font-weight: 600;
-  }
+    .hot-logo img {
+      display: block;
+      height: 100%;
+      width: auto;
+    }
 
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 1px solid var(--ink);
-    margin-bottom: 56px;
-    background: var(--paper);
-  }
-  .stat {
-    padding: 22px 24px;
-    border-right: 1px solid var(--ink);
-  }
-  .stat:last-child { border-right: none; }
-  .stat .num {
-    font-family: "Barlow Condensed", sans-serif;
-    font-weight: 400;
-    font-size: 44px;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-  }
-  .stat .num .small {
-    font-size: 22px;
-    color: var(--red);
-  }
-  .stat .label {
-    font-family: "Archivo", sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    margin-top: 8px;
-    opacity: 0.65;
-  }
+    .marker .line {
+      flex: 1;
+      height: 1px;
+      background: var(--ink);
+      opacity: 0.3;
+    }
 
-  .section { margin-bottom: 56px; }
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-  .section-head .num {
-    font-family: "Archivo", sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    color: var(--red);
-    font-weight: 600;
-  }
-  .section-head h2 {
-    font-family: "Archivo", sans-serif;
-    font-weight: 700;
-    font-size: 30px;
-    letter-spacing: -0.02em;
-  }
-  .section-head .rule {
-    flex: 1;
-    height: 1px;
-    background: var(--ink);
-    opacity: 0.2;
-  }
+    @keyframes pulse {
 
-  summary.section-head {
-    cursor: pointer;
-    list-style: none;
-  }
-  summary.section-head::-webkit-details-marker { display: none; }
-  summary.section-head::after {
-    content: "+";
-    font-family: "Archivo", sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--red);
-    flex-shrink: 0;
-  }
-  details[open] > summary.section-head::after {
-    content: "\2212";
-  }
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-  .about-grid p {
-    font-size: 17px;
-    line-height: 1.65;
-  }
-  .about-grid p .accent {
-    background: var(--red);
-    color: var(--paper);
-    padding: 1px 8px;
-    font-family: "Archivo", sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-  }
+      50% {
+        opacity: 0.4;
+        transform: scale(1.4);
+      }
+    }
 
-  .faq {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px 40px;
-  }
-  .faq-item {
-    border-top: 1px solid var(--red);
-    padding-top: 14px;
-  }
-  .faq-q {
-    font-family: "Archivo", sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 8px;
-  }
-  .faq-q .brand {
-    text-transform: none;
-  }
-  .faq-a {
-    font-size: 14px;
-    line-height: 1.65;
-    opacity: 0.85;
-  }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: end;
+      border-bottom: 1px solid var(--red);
+      padding-bottom: 32px;
+      margin-bottom: 40px;
+      position: relative;
+    }
 
-  .workflow {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    border-top: 1px solid var(--red);
-    border-bottom: 1px solid var(--red);
-  }
-  .step {
-    padding: 24px 20px 28px;
-    border-right: 1px solid var(--line-soft);
-    background: var(--paper);
-    transition: background 0.3s ease;
-  }
-  .step:last-child { border-right: none; }
-  .step:hover { background: var(--paper-deep); }
-  .step .stepnum {
-    font-family: "Archivo", sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    color: var(--red);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-  }
-  .step .stepnum::before {
-    content: "";
-    display: block;
-    width: 18px; height: 2px;
-    background: var(--red);
-  }
-  .step h3 {
-    font-family: "Archivo", sans-serif;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 1.2;
-    margin-bottom: 10px;
-    letter-spacing: -0.01em;
-  }
-  .step p {
-    font-size: 13.5px;
-    line-height: 1.55;
-    opacity: 0.8;
-  }
-  .step .tool {
-    display: inline-block;
-    margin-top: 12px;
-    font-family: "Archivo", sans-serif;
-    font-size: 10.5px;
-    padding: 4px 8px;
-    border: 1px solid var(--red);
-    color: var(--red);
-    letter-spacing: 0.04em;
-    font-weight: 500;
-    line-height: 1.45;
-    max-width: 100%;
-    white-space: normal;
-    word-break: break-word;
-  }
+    .hero::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--red);
+    }
 
-  .oe-block { margin-bottom: 36px; }
-  .oe-block:last-child { margin-bottom: 0; }
-  .oe-banner {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 14px 0;
-    border-top: 1px solid var(--red);
-    border-bottom: 1px solid var(--red);
-    margin-bottom: 24px;
-  }
-  .oe-banner .badge {
-    font-family: "Archivo", sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    background: var(--red);
-    color: var(--paper);
-    padding: 6px 12px;
-    font-weight: 600;
-  }
-  .oe-banner h3 {
-    font-family: "Archivo", sans-serif;
-    font-weight: 700;
-    font-style: italic;
-    font-size: 24px;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    color: var(--ink);
-  }
-  .oe-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px 40px;
-  }
-  .oe-item {
-    display: grid;
-    grid-template-columns: 22px 1fr;
-    gap: 10px;
-    font-size: 15px;
-    line-height: 1.55;
-    padding-top: 4px;
-  }
-  .oe-item::before {
-    content: "›";
-    color: var(--red);
-    font-family: "Archivo", sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 1.1;
-  }
-  .oe-item strong { font-weight: 600; }
-  .oe-item .note {
-    display: block;
-    font-size: 12.5px;
-    opacity: 0.6;
-    margin-top: 4px;
-    font-style: italic;
-  }
+    h1 {
+      font-family: "Archivo", sans-serif;
+      font-weight: 800;
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
 
-  .deliverables {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-top: 8px;
-  }
-  .deliv {
-    border: 1px solid var(--ink);
-    padding: 24px 24px 26px;
-    background: var(--paper);
-    position: relative;
-  }
-  .deliv::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: var(--red);
-  }
-  .deliv .tag {
-    font-family: "Archivo", sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
-  .deliv h4 {
-    font-family: "Archivo", sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
-  }
-  .deliv p {
-    font-size: 14px;
-    line-height: 1.55;
-    opacity: 0.8;
-  }
-  .deliv .project-link {
-    display: inline-block;
-    margin-top: 14px;
-    font-family: "Archivo", sans-serif;
-    font-size: 10.5px;
-    padding: 4px 8px;
-    border: 1px solid var(--red);
-    color: var(--red);
-    letter-spacing: 0.04em;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .deliv .project-link:hover {
-    background: var(--red);
-    color: var(--paper);
-  }
+    h1 em {
+      font-style: italic;
+      font-weight: 800;
+      color: var(--red);
+    }
 
-  .video-demo {
-    margin-top: 24px;
-    border: 1px solid var(--ink);
-    background: var(--paper);
-    position: relative;
-  }
-  .video-demo::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: var(--red);
-  }
-  .video-demo video {
-    display: block;
-    width: 100%;
-    max-height: 520px;
-    background: #000;
-  }
+    .hero-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-bottom: 8px;
+    }
 
-  .faq-a a {
-    color: var(--red);
-    text-decoration: none;
-    border-bottom: 1px solid var(--red);
-    padding-bottom: 1px;
-  }
+    .hero-aside p {
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 360px;
+    }
 
-  .apply {
-    background: var(--paper-deep);
-    color: var(--ink);
-    padding: 44px 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    border-top: 4px solid var(--red);
-  }
-  .apply h2 {
-    font-family: "Archivo", sans-serif;
-    font-weight: 800;
-    font-size: 44px;
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-  .apply h2 em {
-    font-style: italic;
-    color: var(--red);
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
-    text-decoration-color: var(--red);
-  }
-  .apply-info {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    font-family: "Archivo", sans-serif;
-    font-size: 13px;
-    line-height: 1.5;
-  }
-  .apply-info .row {
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--line-soft);
-  }
-  .apply-info .row:last-child { border-bottom: none; }
-  .apply-info .key {
-    color: var(--red);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .apply-info .val { font-size: 14px; }
-  .apply-info .val strong { font-weight: 600; }
-  .apply-info .val .note {
-    display: block;
-    font-size: 12px;
-    opacity: 0.6;
-    font-style: italic;
-    margin-top: 4px;
-  }
-  .apply-info .val a {
-    color: var(--red);
-    text-decoration: none;
-    border-bottom: 1px solid var(--red);
-    padding-bottom: 1px;
-  }
+    .hero-aside .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border: 1px solid var(--red);
+      border-radius: 100px;
+      font-family: "Archivo", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--paper);
+      width: fit-content;
+      color: var(--red-deep);
+    }
 
-  footer {
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 24px;
-    flex-wrap: wrap;
-    font-family: "Archivo", sans-serif;
-    font-size: 10.5px;
-    letter-spacing: 0.12em;
-    opacity: 0.7;
-  }
-  footer a {
-    color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid var(--line-soft);
-    padding-bottom: 1px;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-  footer a:hover {
-    color: var(--red);
-    border-bottom-color: var(--red);
-  }
-  footer .links {
-    display: flex;
-    gap: 18px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  footer .fair-logo-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  footer .tool-logo {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    display: block;
-  }
+    .pill .badge {
+      background: var(--red);
+      color: var(--paper);
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
 
-  @media (max-width: 900px) {
-    .page { padding: 32px 24px; }
-    .hero { grid-template-columns: 1fr; gap: 24px; }
-    .stats { grid-template-columns: 1fr; }
-    .stat { border-right: none; border-bottom: 1px solid var(--ink); }
-    .stat:last-child { border-bottom: none; }
-    .workflow { grid-template-columns: 1fr; }
-    .step { border-right: none; border-bottom: 1px solid var(--line-soft); }
-    .step:last-child { border-bottom: none; }
-    .about-grid { grid-template-columns: 1fr; gap: 20px; }
-    .faq { grid-template-columns: 1fr; }
-    .oe-grid { grid-template-columns: 1fr; }
-    .oe-banner h3 { font-size: 22px; }
-    .apply { grid-template-columns: 1fr; padding: 28px; }
-    .deliverables { grid-template-columns: 1fr; }
-  }
-</style>
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--ink);
+      margin-bottom: 56px;
+      background: var(--paper);
+    }
+
+    .stat {
+      padding: 22px 24px;
+      border-right: 1px solid var(--ink);
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat .num {
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 400;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .stat .num .small {
+      font-size: 22px;
+      color: var(--red);
+    }
+
+    .stat .label {
+      font-family: "Archivo", sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      opacity: 0.65;
+    }
+
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .section-head .num {
+      font-family: "Archivo", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .section-head h2 {
+      font-family: "Archivo", sans-serif;
+      font-weight: 700;
+      font-size: 30px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head .rule {
+      flex: 1;
+      height: 1px;
+      background: var(--ink);
+      opacity: 0.2;
+    }
+
+    summary.section-head {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    summary.section-head::-webkit-details-marker {
+      display: none;
+    }
+
+    summary.section-head::after {
+      content: "+";
+      font-family: "Archivo", sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--red);
+      flex-shrink: 0;
+    }
+
+    details[open]>summary.section-head::after {
+      content: "\2212";
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .about-grid p {
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .about-grid p .accent {
+      background: var(--red);
+      color: var(--paper);
+      padding: 1px 8px;
+      font-family: "Archivo", sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .faq {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 40px;
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--red);
+      padding-top: 14px;
+    }
+
+    .faq-q {
+      font-family: "Archivo", sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    .faq-q .brand {
+      text-transform: none;
+    }
+
+    .faq-a {
+      font-size: 14px;
+      line-height: 1.65;
+      opacity: 0.85;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid var(--red);
+      border-bottom: 1px solid var(--red);
+    }
+
+    .step {
+      padding: 24px 20px 28px;
+      border-right: 1px solid var(--line-soft);
+      background: var(--paper);
+      transition: background 0.3s ease;
+    }
+
+    .step:last-child {
+      border-right: none;
+    }
+
+    .step:hover {
+      background: var(--paper-deep);
+    }
+
+    .step .stepnum {
+      font-family: "Archivo", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--red);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .step .stepnum::before {
+      content: "";
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .step h3 {
+      font-family: "Archivo", sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .step p {
+      font-size: 13.5px;
+      line-height: 1.55;
+      opacity: 0.8;
+    }
+
+    .step .tool {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: "Archivo", sans-serif;
+      font-size: 10.5px;
+      padding: 4px 8px;
+      border: 1px solid var(--red);
+      color: var(--red);
+      letter-spacing: 0.04em;
+      font-weight: 500;
+      line-height: 1.45;
+      max-width: 100%;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .oe-block {
+      margin-bottom: 36px;
+    }
+
+    .oe-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .oe-banner {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 14px 0;
+      border-top: 1px solid var(--red);
+      border-bottom: 1px solid var(--red);
+      margin-bottom: 24px;
+    }
+
+    .oe-banner .badge {
+      font-family: "Archivo", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--red);
+      color: var(--paper);
+      padding: 6px 12px;
+      font-weight: 600;
+    }
+
+    .oe-banner h3 {
+      font-family: "Archivo", sans-serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .oe-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 40px;
+    }
+
+    .oe-item {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      font-size: 15px;
+      line-height: 1.55;
+      padding-top: 4px;
+    }
+
+    .oe-item::before {
+      content: "›";
+      color: var(--red);
+      font-family: "Archivo", sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+
+    .oe-item strong {
+      font-weight: 600;
+    }
+
+    .oe-item .note {
+      display: block;
+      font-size: 12.5px;
+      opacity: 0.6;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .deliv {
+      border: 1px solid var(--ink);
+      padding: 24px 24px 26px;
+      background: var(--paper);
+      position: relative;
+    }
+
+    .deliv::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--red);
+    }
+
+    .deliv .tag {
+      font-family: "Archivo", sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .deliv h4 {
+      font-family: "Archivo", sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .deliv p {
+      font-size: 14px;
+      line-height: 1.55;
+      opacity: 0.8;
+    }
+
+    .deliv .deliv-link {
+      display: inline-block;
+      margin-top: 14px;
+      font-family: "Archivo", sans-serif;
+      font-size: 10.5px;
+      padding: 4px 8px;
+      border: 1px solid var(--red);
+      color: var(--red);
+      letter-spacing: 0.04em;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .deliv .deliv-link:hover {
+      background: var(--red);
+      color: var(--paper);
+    }
+
+    .video-demo {
+      margin-top: 24px;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      position: relative;
+    }
+
+    .video-demo::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--red);
+    }
+
+    .video-demo video {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      background: #000;
+    }
+
+    .faq-a a {
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 1px solid var(--red);
+      padding-bottom: 1px;
+    }
+
+    .apply {
+      background: var(--paper-deep);
+      color: var(--ink);
+      padding: 44px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      border-top: 4px solid var(--red);
+    }
+
+    .apply h2 {
+      font-family: "Archivo", sans-serif;
+      font-weight: 800;
+      font-size: 44px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .apply h2 em {
+      font-style: italic;
+      color: var(--red);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 6px;
+      text-decoration-color: var(--red);
+    }
+
+    .apply-info {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-family: "Archivo", sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .apply-info .row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .apply-info .row:last-child {
+      border-bottom: none;
+    }
+
+    .apply-info .key {
+      color: var(--red);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .apply-info .val {
+      font-size: 14px;
+    }
+
+    .apply-info .val strong {
+      font-weight: 600;
+    }
+
+    .apply-info .val .note {
+      display: block;
+      font-size: 12px;
+      opacity: 0.6;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    .apply-info .val a {
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 1px solid var(--red);
+      padding-bottom: 1px;
+    }
+
+    footer {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-family: "Archivo", sans-serif;
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      opacity: 0.7;
+    }
+
+    footer a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid var(--line-soft);
+      padding-bottom: 1px;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    footer a:hover {
+      color: var(--red);
+      border-bottom-color: var(--red);
+    }
+
+    footer .links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    footer .fair-logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    footer .tool-logo {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 32px 24px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        border-right: none;
+        border-bottom: 1px solid var(--ink);
+      }
+
+      .stat:last-child {
+        border-bottom: none;
+      }
+
+      .workflow {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        border-right: none;
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .step:last-child {
+        border-bottom: none;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .faq {
+        grid-template-columns: 1fr;
+      }
+
+      .oe-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .oe-banner h3 {
+        font-size: 22px;
+      }
+
+      .apply {
+        grid-template-columns: 1fr;
+        padding: 28px;
+      }
+
+      .deliverables {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="page">
+  <div class="page">
 
-  <div class="marker">
-    <a href="https://www.hotosm.org/en/" target="_blank" rel="noopener" class="hot-logo">
-      <img src="https://raw.githubusercontent.com/hotosm/ui/main/src/assets/logo/hot-logo-icon.svg" alt="HOT">
-      <img src="https://raw.githubusercontent.com/hotosm/ui/main/src/assets/logo/hot-logo-text.svg" alt="Humanitarian OpenStreetMap Team">
-    </a>
-    <span class="dot"></span>
-    <span>Open Call / 2026</span>
-    <span class="line"></span>
-    <span>HOTOSM</span>
-  </div>
-
-  <section class="hero">
-    <div>
-      <h1>Map your city <em>with fAIr.</em></h1>
-    </div>
-    <aside class="hero-aside">
-      <span class="pill"><span class="badge">$3,000 to $5,000</span> per project</span>
-      <p>An open call for community mappers, urban researchers, students, and civic teams to detect visible features from drone imagery and publish the results as open mapping data.</p>
-    </aside>
-  </section>
-
-  <section class="stats">
-    <div class="stat">
-      <div class="num">1000<span class="small">+</span></div>
-      <div class="label">Training samples (target)</div>
-    </div>
-    <div class="stat">
-      <div class="num">2</div>
-      <div class="label">Open public outputs</div>
-    </div>
-    <div class="stat">
-      <div class="num">1</div>
-      <div class="label">City, mapped openly</div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <span class="num">01</span>
-      <h2>The idea</h2>
-      <span class="rule"></span>
-    </div>
-    <div class="about-grid">
-      <p>You know what geographic data is missing to make better decisions. We support you to fill those gaps using AI-assisted mapping on drone imagery, with all results published as open data.</p>
-      <p>Selected projects receive funding depending on the proposal scope, plus full technical support from HOT. The AI side is on us. You define the feature, run the mapathon, and validate the output.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <span class="num">02</span>
-      <h2>The pipeline</h2>
-      <span class="rule"></span>
-    </div>
-    <div class="workflow">
-      <div class="step">
-        <div class="stepnum">Step 01</div>
-        <h3>Define the feature</h3>
-        <p>Pick anything visible from drone imagery. Open spaces, wastebins, rooftops, solar panels, informal structures, street furniture, anything you can detect and want mapped.</p>
-      </div>
-      <div class="step">
-        <div class="stepnum">Step 02</div>
-        <h3>Feasibility study</h3>
-        <p>Confirm enough samples exist (around 1000+ is a good target) and decide on imagery: fly your own drone or use existing drone imagery for the area.</p>
-      </div>
-      <div class="step">
-        <div class="stepnum">Step 03</div>
-        <h3>Run a Locate mapathon</h3>
-        <p>Set up a Locate Objects project on MapSwipe and mobilise volunteers to label your feature. We help you scope and run the session.</p>
-        <span class="tool">MapSwipe / Locate Objects</span>
-      </div>
-      <div class="step">
-        <div class="stepnum">Step 04</div>
-        <h3>Use the model output</h3>
-        <p>HOT supports you to train a fAIr model on your samples and shares the inference output. If results are weak, you can iterate with the team and collect more data.</p>
-        <span class="tool">Model training runs on HOT infrastructure</span>
-      </div>
-      <div class="step">
-        <div class="stepnum">Step 05</div>
-        <h3>Publish openly</h3>
-        <p>Validate the model outputs and publish them as open mapping data. OpenStreetMap is the preferred destination. Where features need conflation (rooftops, for example), HDX or another public platform is accepted.</p>
-        <span class="tool">OSM preferred</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <span class="num">03</span>
-      <h2>What you get, what we expect</h2>
-      <span class="rule"></span>
-    </div>
-    <div class="oe-block">
-      <div class="oe-banner">
-        <span class="badge">Offer</span>
-        <h3>What HOT offers.</h3>
-      </div>
-      <div class="oe-grid">
-        <div class="oe-item"><span><strong>Project funding</strong> covering mapathon costs, validation effort, and team time.</span></div>
-        <div class="oe-item"><span><strong>AI support.</strong> We help you train the object detection model with fAIr on your data and share the inference outputs.</span></div>
-        <div class="oe-item"><span><strong>Technical guidance</strong> on MapSwipe Locate setup, sample sizing, validation, and OSM contribution.</span></div>
-        <div class="oe-item"><span><strong>Possible drone or expert support.</strong><span class="note">Subject to availability. We may be able to send a team member or connect you with mentors.</span></span></div>
-      </div>
-    </div>
-    <div class="oe-block">
-      <div class="oe-banner">
-        <span class="badge">Expect</span>
-        <h3>What we expect.</h3>
-      </div>
-      <div class="oe-grid">
-        <div class="oe-item"><span><strong>A clear feature target</strong> visible in drone imagery, with around 1000+ expected samples (smaller cases considered).</span></div>
-        <div class="oe-item"><span><strong>Imagery access.</strong> Fly your own drone (or seek support from HOT Team) or use existing drone imagery covering the project area.</span></div>
-        <div class="oe-item"><span><strong>A local team or community</strong> able to run a Locate mapathon and validate the results.</span></div>
-        <div class="oe-item"><span><strong>Willingness to iterate</strong> with the HOT team if the model needs more data to perform well.</span></div>
-        <div class="oe-item"><span><strong>Open data commitment.</strong> All outputs published openly. Mapping features go to OpenStreetMap where feasible, or to HDX or another public platform when conflation or other constraints apply.</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <span class="num">04</span>
-      <h2>Final deliverables</h2>
-      <span class="rule"></span>
-    </div>
-    <div class="deliverables">
-      <div class="deliv">
-        <div class="tag">Deliverable 01</div>
-        <h4>Completed MapSwipe project</h4>
-        <p>The Locate project results from your mapathon, finalised and contributed publicly through MapSwipe.</p>
-      </div>
-      <div class="deliv">
-        <div class="tag">Deliverable 02</div>
-        <h4>Open mapping data</h4>
-        <p>Validated features published as open data. OpenStreetMap is the preferred destination. Where conflation or other constraints make OSM contribution unfeasible (rooftops, for example), HDX or another open public platform is accepted.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <span class="num">05</span>
-      <h2>Sample Locate projects</h2>
-      <span class="rule"></span>
-    </div>
-    <div class="deliverables">
-      <div class="deliv">
-        <div class="tag">Freetown</div>
-        <h4>Locate Solar Panels - IV</h4>
-        <p>A live MapSwipe Locate Objects project mapping solar panels from drone imagery.</p>
-        <a class="project-link" href="https://web-app-stage.mapswipe.dev.togglecorp.com/#/en/projects/01KVCXEX314B4M4A0F58KK93Q3" target="_blank" rel="noopener">Open project &rarr;</a>
-      </div>
-      <div class="deliv">
-        <div class="tag">Freetown</div>
-        <h4>Locate Trees - V</h4>
-        <p>A live MapSwipe Locate Objects project mapping trees from drone imagery.</p>
-        <a class="project-link" href="https://web-app-stage.mapswipe.dev.togglecorp.com/#/en/projects/01KVCJVSW3PRJ0GAK7YXCCWNPH" target="_blank" rel="noopener">Open project &rarr;</a>
-      </div>
-    </div>
-    <div class="video-demo">
-      <video controls muted preload="metadata" playsinline>
-        <source src="data/mapswipe-locate-object.mov">
-      </video>
-    </div>
-  </section>
-
-  <details class="section">
-    <summary class="section-head">
-      <span class="num">06</span>
-      <h2>FAQ</h2>
-      <span class="rule"></span>
-    </summary>
-    <div class="faq">
-      <div class="faq-item">
-        <div class="faq-q">What is MapSwipe?</div>
-        <div class="faq-a">MapSwipe is a free mobile app that lets volunteers contribute to humanitarian mapping by swiping through satellite or drone imagery. You tap to mark where features appear, building a dataset that guides more detailed mapping work.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Why would I use MapSwipe in my project?</div>
-        <div class="faq-a">MapSwipe helps you annotate your drone imagery and create the training data used to train the fAIr model.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What is a Locate Objects project?</div>
-        <div class="faq-a">Locate Objects is a project type within MapSwipe. Instead of simply flagging broad areas, it asks volunteers to point to the exact position of a specific feature in each image tile, producing precise coordinates suitable for training an AI model.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What is <span class="brand">fAIr</span>?</div>
-        <div class="faq-a">fAIr is HOT's open-source AI-assisted mapping tool. It trains object detection models on community-labelled data and runs inference over drone imagery, producing feature predictions that mappers then validate and publish as open data.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Looking for AI model development instead?</div>
-        <div class="faq-a">This call is about running Locate mapathons and publishing open data. If you want to build the Earth Observation / GeoAI models themselves, see the <a href="https://hotosm.org/en/request-for-proposals/open-call-for-earth-observation-geoai-models/" target="_blank" rel="noopener">open call for Earth Observation GeoAI models</a>.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can I use any drone imagery, including my own private footage?</div>
-        <div class="faq-a">No. Imagery used for the project must be licensed CC BY 4.0. The resulting mapped data follows the same open standard, published under ODbL.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Does the mapathon need to cover the entire city?</div>
-        <div class="faq-a">No. Partial coverage is fine, as long as the area is large enough to produce enough samples of your target feature.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Do I need to map the entire area of interest, or just the training area?</div>
-        <div class="faq-a">The entire area of interest must be fully mapped as your deliverable, regardless of how much area you used to collect training samples.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Is the 1000+ samples figure a hard target?</div>
-        <div class="faq-a">No. It can be adjusted depending on the use case, whether your feature is a generic, easy-to-detect case or a harder one.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Do I need one feature type, or can I map several?</div>
-        <div class="faq-a">Multiple feature types are possible, typically run as 2 to 3 separate MapSwipe projects. In that case, distribute your sample target evenly across the feature types.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">When does the project need to be completed?</div>
-        <div class="faq-a">By November 2026 at the latest.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Are the features we can map restricted to buildings only?</div>
-        <div class="faq-a">No. You can be creative. Any feature that can be seen and classified from drone imagery is a valid target.</div>
-      </div>
-    </div>
-  </details>
-
-  <section class="apply">
-    <h2>Send us your <em>proposal.</em></h2>
-    <div class="apply-info">
-      <div class="row">
-        <span class="key">Who</span>
-        <span class="val">Community mappers, urban researchers, students, civic tech teams, NGOs.</span>
-      </div>
-      <div class="row">
-        <span class="key">Budget</span>
-        <span class="val"><strong>$3,000 to $5,000</strong> per selected project, depending on the proposal scope.</span>
-      </div>
-      <div class="row">
-        <span class="key">Deadline</span>
-        <span class="val">30 September 2026<span class="note">Applications are reviewed on a rolling basis. The call may close early if applications exceed our review capacity, so apply sooner rather than later.</span></span>
-      </div>
-      <div class="row">
-        <span class="key">Apply</span>
-        <span class="val"><a href="https://forms.gle/j928xqh5ShC1PKWV6" target="_blank" rel="noopener">Apply via Google Form</a></span>
-      </div>
-      <div class="row">
-        <span class="key">Contact</span>
-        <span class="val"><a href="mailto:fair@hotosm.org">fair@hotosm.org</a></span>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <span>&copy; 2026 Humanitarian OpenStreetMap Team / Open Call</span>
-    <div class="links">
-      <a href="https://www.hotosm.org/en/" target="_blank" rel="noopener">HOT</a>
-      <a href="https://fair.hotosm.org/" target="_blank" rel="noopener" class="fair-logo-link">
-        fAIr
+    <div class="marker">
+      <a href="https://www.hotosm.org/en/" target="_blank" rel="noopener" class="hot-logo">
+        <img src="https://raw.githubusercontent.com/hotosm/ui/main/src/assets/logo/hot-logo-icon.svg" alt="HOT">
+        <img src="https://raw.githubusercontent.com/hotosm/ui/main/src/assets/logo/hot-logo-text.svg"
+          alt="Humanitarian OpenStreetMap Team">
       </a>
-      <a href="https://mapswipe.org/en/" target="_blank" rel="noopener">MapSwipe</a>
+      <span class="dot"></span>
+      <span>Open Call / 2026</span>
+      <span class="line"></span>
+      <span>HOTOSM</span>
     </div>
-  </footer>
 
-</div>
+    <section class="hero">
+      <div>
+        <h1>Map your city <em>with fAIr.</em></h1>
+      </div>
+      <aside class="hero-aside">
+        <span class="pill"><span class="badge">$3,000 to $5,000</span> per project</span>
+        <p>An open call for community mappers, urban researchers, students, and civic teams to detect visible features
+          from drone imagery and publish the results as open mapping data.</p>
+      </aside>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="num">1000<span class="small">+</span></div>
+        <div class="label">Training samples (target)</div>
+      </div>
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="label">Open public outputs</div>
+      </div>
+      <div class="stat">
+        <div class="num">1</div>
+        <div class="label">City, mapped openly</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="num">01</span>
+        <h2>The idea</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="about-grid">
+        <p>You know what geographic data is missing to make better decisions. We support you to fill those gaps using
+          AI-assisted mapping on drone imagery, with all results published as open data.</p>
+        <p>Selected projects receive funding depending on the proposal scope, plus full technical support from HOT. The
+          AI side is on us. You define the feature, run the mapathon, and validate the output.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="num">02</span>
+        <h2>The pipeline</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="workflow">
+        <div class="step">
+          <div class="stepnum">Step 01</div>
+          <h3>Define the feature</h3>
+          <p>Pick anything visible from drone imagery. Open spaces, wastebins, rooftops, solar panels, informal
+            structures, street furniture, anything you can detect and want mapped.</p>
+        </div>
+        <div class="step">
+          <div class="stepnum">Step 02</div>
+          <h3>Feasibility study</h3>
+          <p>Confirm enough samples exist (around 1000+ is a good target) and decide on imagery: fly your own drone or
+            use existing drone imagery for the area.</p>
+        </div>
+        <div class="step">
+          <div class="stepnum">Step 03</div>
+          <h3>Run a Locate mapathon</h3>
+          <p>Set up a Locate Objects project on MapSwipe and mobilise volunteers to label your feature. We help you
+            scope and run the session.</p>
+          <span class="tool">MapSwipe / Locate Objects</span>
+        </div>
+        <div class="step">
+          <div class="stepnum">Step 04</div>
+          <h3>Complete the dataset</h3>
+          <p>Finish labelling your area of interest so the mapathon output is a complete, validated dataset. Training a
+            fAIr model on the samples is optional support we can run for you, it's not a requirement.</p>
+          <span class="tool">Model training optional</span>
+        </div>
+        <div class="step">
+          <div class="stepnum">Step 05</div>
+          <h3>Publish openly</h3>
+          <p>Package the labelled dataset and publish it under an open licence so anyone can reuse it for training. We
+            help you set this up.</p>
+          <span class="tool">Openly licensed</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="num">03</span>
+        <h2>What you get, what we expect</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="oe-block">
+        <div class="oe-banner">
+          <span class="badge">Offer</span>
+          <h3>What HOT offers.</h3>
+        </div>
+        <div class="oe-grid">
+          <div class="oe-item"><span><strong>Project funding</strong> covering mapathon costs, validation effort, and
+              team time.</span></div>
+          <div class="oe-item"><span><strong>AI support.</strong> We help you train the object detection model with fAIr
+              on your data and share the inference outputs.</span></div>
+          <div class="oe-item"><span><strong>Technical guidance</strong> on MapSwipe Locate setup, sample sizing,
+              validation, and OSM contribution.</span></div>
+          <div class="oe-item"><span><strong>Possible drone or expert support.</strong><span class="note">Subject to
+                availability. We may be able to send a team member or connect you with mentors.</span></span></div>
+        </div>
+      </div>
+      <div class="oe-block">
+        <div class="oe-banner">
+          <span class="badge">Expect</span>
+          <h3>What we expect.</h3>
+        </div>
+        <div class="oe-grid">
+          <div class="oe-item"><span><strong>A clear feature target</strong> visible in drone imagery, with around 1000+
+              expected samples (smaller cases considered).</span></div>
+          <div class="oe-item"><span><strong>Imagery access.</strong> Fly your own drone (or seek support from HOT Team)
+              or use existing drone imagery covering the project area.</span></div>
+          <div class="oe-item"><span><strong>A local team or community</strong> able to run a Locate mapathon and
+              validate the results.</span></div>
+          <div class="oe-item"><span><strong>Willingness to iterate</strong> with the HOT team if the model needs more
+              data to perform well.</span></div>
+          <div class="oe-item"><span><strong>Open data commitment.</strong> The labelled dataset is published under an
+              open licence so anyone can reuse it for training.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="num">04</span>
+        <h2>Final deliverables</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="deliverables">
+        <div class="deliv">
+          <div class="tag">Deliverable 01</div>
+          <h4>Completed MapSwipe project</h4>
+          <p>The Locate project results from your mapathon, finalised and contributed publicly through MapSwipe.</p>
+        </div>
+        <div class="deliv">
+          <div class="tag">Deliverable 02</div>
+          <h4>Open training dataset</h4>
+          <p>Your labelled samples a packaged as an openly licensed object detection dataset that others can train on.
+            We help you set it up. This is the kind of training data we are looking for:</p>
+          <a class="deliv-link" href="https://huggingface.co/datasets/hotosm/streetlevel-poles" target="_blank"
+            rel="noopener">hotosm/streetlevel-poles &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <span class="num">05</span>
+        <h2>Locate Objects in action</h2>
+        <span class="rule"></span>
+      </div>
+      <div class="video-demo">
+        <video controls muted preload="metadata" playsinline>
+          <source src="data/mapswipe-locate-object.mov">
+        </video>
+      </div>
+    </section>
+
+    <details class="section">
+      <summary class="section-head">
+        <span class="num">06</span>
+        <h2>FAQ</h2>
+        <span class="rule"></span>
+      </summary>
+      <div class="faq">
+        <div class="faq-item">
+          <div class="faq-q">What is MapSwipe?</div>
+          <div class="faq-a">MapSwipe is a free mobile app that lets volunteers contribute to humanitarian mapping by
+            swiping through satellite or drone imagery. You tap to mark where features appear, building a dataset that
+            guides more detailed mapping work.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Why would I use MapSwipe in my project?</div>
+          <div class="faq-a">MapSwipe helps you annotate your drone imagery and create the training data used to train
+            the fAIr model.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What is a Locate Objects project?</div>
+          <div class="faq-a">Locate Objects is a project type within MapSwipe. Instead of simply flagging broad areas,
+            it asks volunteers to point to the exact position of a specific feature in each image tile, producing
+            precise coordinates suitable for training an AI model.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What is <span class="brand">fAIr</span>?</div>
+          <div class="faq-a">fAIr is HOT's open-source AI-assisted mapping tool. It trains object detection models on
+            community-labelled data and runs inference over drone imagery, producing feature predictions that mappers
+            then validate and publish as open data.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Looking for AI model development instead?</div>
+          <div class="faq-a">This call is about running Locate mapathons and publishing open data. If you want to build
+            the Earth Observation / GeoAI models themselves, see the <a
+              href="https://hotosm.org/en/request-for-proposals/open-call-for-earth-observation-geoai-models/"
+              target="_blank" rel="noopener">open call for Earth Observation GeoAI models</a>.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I use any drone imagery, including my own private footage?</div>
+          <div class="faq-a">No. Imagery used for the project must be licensed CC BY 4.0. The resulting mapped data
+            follows the same open standard, published under ODbL.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does the mapathon need to cover the entire city?</div>
+          <div class="faq-a">No. Partial coverage is fine, as long as the area is large enough to produce enough samples
+            of your target feature.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need to map the entire area of interest, or just the training area?</div>
+          <div class="faq-a">The entire area of interest must be fully mapped as your deliverable, regardless of how
+            much area you used to collect training samples.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is the 1000+ samples figure a hard target?</div>
+          <div class="faq-a">No. It can be adjusted depending on the use case, whether your feature is a generic,
+            easy-to-detect case or a harder one.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do I need one feature type, or can I map several?</div>
+          <div class="faq-a">Multiple feature types are possible, typically run as 2 to 3 separate MapSwipe projects. In
+            that case, distribute your sample target evenly across the feature types.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">When does the project need to be completed?</div>
+          <div class="faq-a">By November 2026 at the latest.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Are the features we can map restricted to buildings only?</div>
+          <div class="faq-a">No. You can be creative. Any feature that can be seen and classified from drone imagery is
+            a valid target.</div>
+        </div>
+      </div>
+    </details>
+
+    <section class="apply">
+      <h2>Send us your <em>proposal.</em></h2>
+      <div class="apply-info">
+        <div class="row">
+          <span class="key">Who</span>
+          <span class="val">Community mappers, urban researchers, students, civic tech teams, NGOs.</span>
+        </div>
+        <div class="row">
+          <span class="key">Budget</span>
+          <span class="val"><strong>$3,000 to $5,000</strong> per selected project, depending on the proposal
+            scope.</span>
+        </div>
+        <div class="row">
+          <span class="key">Deadline</span>
+          <span class="val">30 September 2026<span class="note">Applications are reviewed on a rolling basis. The call
+              may close early if applications exceed our review capacity, so apply sooner rather than
+              later.</span></span>
+        </div>
+        <div class="row">
+          <span class="key">Apply</span>
+          <span class="val"><a href="https://forms.gle/j928xqh5ShC1PKWV6" target="_blank" rel="noopener">Apply via
+              Google Form</a></span>
+        </div>
+        <div class="row">
+          <span class="key">Contact</span>
+          <span class="val"><a href="mailto:fair@hotosm.org">fair@hotosm.org</a></span>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 Humanitarian OpenStreetMap Team / Open Call</span>
+      <div class="links">
+        <a href="https://www.hotosm.org/en/" target="_blank" rel="noopener">HOT</a>
+        <a href="https://fair.hotosm.org/" target="_blank" rel="noopener" class="fair-logo-link">
+          fAIr
+        </a>
+        <a href="https://mapswipe.org/en/" target="_blank" rel="noopener">MapSwipe</a>
+      </div>
+    </footer>
+
+  </div>
 </body>
+
 </html>
